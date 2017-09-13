@@ -9,6 +9,13 @@ Spree::Core::Engine.add_routes do
     resource :review_settings, only: [:edit, :update]
   end
 
+  namespace :api, defaults: { format: 'json' } do
+    namespace :v1 do
+      resources :reviews, only: [:index, :create]
+      resources :feedback_reviews, only: [:create]
+    end
+  end
+
   resources :products, only: [] do
     resources :reviews, only: [:index, :new, :create] do
     end
