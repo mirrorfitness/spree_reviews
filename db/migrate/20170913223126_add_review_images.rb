@@ -1,4 +1,4 @@
-class AddReviewImages < ActiveRecord::Migration[5.1]
+class AddReviewImages < ActiveRecord::Migration
   def change
     create_table "spree_reviews_images" do |t|
       t.integer "review_id"
