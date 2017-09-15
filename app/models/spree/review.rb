@@ -10,8 +10,8 @@ class Spree::Review < ActiveRecord::Base
   validates :name, :review, presence: true
   validates :rating, numericality: {
     only_integer: true,
-    greater_than_or_equal_to: 0,
-    less_than_or_equal_to: 1,
+    greater_than_or_equal_to: 1,
+    less_than_or_equal_to: 5,
     message: Spree.t(:you_must_enter_value_for_rating)
   }
 
