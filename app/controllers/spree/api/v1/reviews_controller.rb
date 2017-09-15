@@ -21,7 +21,7 @@ module Spree
 
           authorize! :create, @review
           if @review.save
-            respond_with(@review, status: 204)
+            respond_with(@review, status: 201, default_template: :show)
           else
             invalid_resource!(@review)
           end

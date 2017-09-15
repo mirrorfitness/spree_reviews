@@ -14,7 +14,7 @@ module Spree
           end
 
           if @feedback_review.save
-            respond_with(@feedback_review, status: 204)
+            respond_with(@subscription, status: 201, default_template: :show)
           else
             invalid_resource!(@feedback_review)
           end
