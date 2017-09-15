@@ -6,15 +6,17 @@ module Spree
         before_action :load_review, only: :create
 
         def create
+          authorize! :create, FeedbackReview
+
           if @review.present?
             @feedback_review = @review.feedback_reviews.new(feedback_review_params)
             @review.user = current_api_user
             @feedback_review.locale = I18n.locale.to_s if Spree::Reviews::Config[:track_locale]
-            authorize! :create, @feedback_review
           end
 
           if @feedback_review.save
-            respond_with(@subscription, status: 201, default_template: :show)
+            @review.reload
+            respond_with(@review, status: 201, default_template: :show)
           else
             invalid_resource!(@feedback_review)
           end

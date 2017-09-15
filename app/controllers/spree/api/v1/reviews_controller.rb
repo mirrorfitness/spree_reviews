@@ -11,6 +11,8 @@ module Spree
 
         # save if all ok
         def create
+          authorize! :create, Review
+
           params[:review][:rating].sub!(/\s*[^0-9]*\z/, '') unless params[:review][:rating].blank?
 
           @review = Spree::Review.new(review_params)
@@ -19,7 +21,6 @@ module Spree
           @review.ip_address = request.remote_ip
           @review.locale = I18n.locale.to_s if Spree::Reviews::Config[:track_locale]
 
-          authorize! :create, @review
           if @review.save
             respond_with(@review, status: 201, default_template: :show)
           else

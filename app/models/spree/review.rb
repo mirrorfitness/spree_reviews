@@ -10,8 +10,8 @@ class Spree::Review < ActiveRecord::Base
   validates :name, :review, presence: true
   validates :rating, numericality: {
     only_integer: true,
-    greater_than_or_equal_to: 1,
-    less_than_or_equal_to: 5,
+    greater_than_or_equal_to: 0,
+    less_than_or_equal_to: 1,
     message: Spree.t(:you_must_enter_value_for_rating)
   }
 
@@ -26,8 +26,7 @@ class Spree::Review < ActiveRecord::Base
   scope :default_approval_filter, -> { Spree::Reviews::Config[:include_unapproved_reviews] ? all : approved }
 
   def feedback_stars
-    return 0 if feedback_reviews.size <= 0
-    ((feedback_reviews.sum(:rating) / feedback_reviews.size) + 0.5).floor
+    feedback_reviews.size <= 0 ? 0 : feedback_reviews.sum(:rating)
   end
 
   def recalculate_product_rating
