@@ -25,7 +25,7 @@ class Spree::Review < ActiveRecord::Base
   scope :not_approved, -> { where(approved: false) }
   scope :default_approval_filter, -> { Spree::Reviews::Config[:include_unapproved_reviews] ? all : approved }
 
-  accepts_nested_attributes_for :review_images
+  accepts_nested_attributes_for :review_images, allow_destroy: true
 
   def feedback_stars
     feedback_reviews.size <= 0 ? 0 : feedback_reviews.sum(:rating)

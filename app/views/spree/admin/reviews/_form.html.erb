@@ -6,6 +6,21 @@
 </div>
 
 <div class="form-group">
+  <%= f.label :city %>
+  <%= f.text_field :city, class: 'form-control' %>
+</div>
+
+<div class="form-group">
+  <%= f.label :state %>
+  <%= f.text_field :state, class: 'form-control' %>
+</div>
+
+<div class="form-group">
+  <%= f.label :email %>
+  <%= f.text_field :email, class: 'form-control' %>
+</div>
+
+<div class="form-group">
   <%= f.label :title %>
   <%= f.text_field :title, class: 'form-control' %>
 </div>
@@ -14,6 +29,43 @@
   <%= f.label :review %>
   <%= f.text_area :review, wrap: 'virtual', rows: 10, cols: 60, class: 'form-control' %>
 </div>
+
+<div class="form-group">
+  <%= f.label :approved %>
+  <%= f.check_box :approved, class: 'form-control' %>
+  <%= f.label :featured %>
+  <%= f.check_box :featured, class: 'form-control' %>
+</div>
+
+<% unless @review.review_images.any? %>
+  <div class="alert alert-warning">
+    <%= Spree.t(:no_resource_found, resource: plural_resource_name(Spree::ReviewImage)) %>.
+  </div>
+<% else %>
+  <table class="table" data-hook="images_table">
+    <thead>
+      <tr data-hook="images_header">
+        <th colspan="2">
+          <%= Spree.t(:thumbnail) %>
+        </th>
+        <th class="actions"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% (@review.review_images).each do |image| %>
+        <tr id="<%= spree_dom_id image %>" data-hook="images_row">
+          <td class="image">
+            <%= link_to image_tag(main_app.url_for(image.attachment.url(:thumb))), main_app.url_for(image.attachment.url) %>
+          </td>
+          <td class="actions actions-2 text-right">
+            <%= link_to_delete(image, { url: spree.admin_review_review_image_url(@review, image), no_text: true }) if can? :destroy, image %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
 
 <% if Spree::Reviews::Config[:track_locale] %>
   <div class="form-group">

@@ -15,6 +15,16 @@ class Spree::Admin::ReviewsController < Spree::Admin::ResourceController
     redirect_to admin_reviews_path
   end
 
+  def feature
+    review = Spree::Review.find(params[:id])
+    if review.update_attribute(:featured, true)
+      flash[:notice] = Spree.t(:info_featured_review)
+    else
+      flash[:error] = Spree.t(:error_featured_review)
+    end
+    redirect_to admin_reviews_path
+  end
+
   def edit
     return if @review.product
     flash[:error] = Spree.t(:error_no_product)

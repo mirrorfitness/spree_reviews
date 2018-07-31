@@ -50,8 +50,10 @@
 		<thead>
 			<tr>
 				<th><%= sort_link @search, :product, Spree.t(:product) %></th>
+				<th><%= sort_link @search, :featured, Spree.t(:featured) %></th>
 				<th><%= sort_link @search, :rating, Spree::Review.human_attribute_name(:rating) %></th>
 				<th><%= Spree.t(:feedback) %></th>
+				<th><%= Spree::Review.human_attribute_name(:image)  %></th>
 				<th><%= sort_link @search, :user, Spree::Review.human_attribute_name(:user) %></th>
 				<th><%= sort_link @search, :ip_address, Spree::Review.human_attribute_name(:ip_address) %></th>
 				<th><%= sort_link @search, :created_at, Spree::Review.human_attribute_name(:created_at) %></th>
@@ -62,8 +64,12 @@
 			<% @reviews.each do |review| %>
 				<tr data-hook="admin_reviews_index_rows" id="<%= dom_id review %>" class="<%= cycle('odd', 'even') %>">
 					<td><%= review.product.name %></td>
+          <td>
+						<%= link_to_with_icon review.featured ? 'cancel' : 'save', Spree.t(:featured), feature_admin_review_url(review), no_text: true, class: 'featured btn btn-default' %>
+          </td>
 					<td><%= txt_stars(review.rating) %></td>
 					<td><%= link_to "(#{review.feedback_stars}/#{review.feedback_reviews.size})", admin_review_feedback_reviews_path(review) %></td>
+          <td><%= tag.img(src: review.review_images.first.attachment.url(:thumb)) if review.review_images.any? %></td>
 					<td><%= review.user_id ? link_to(review.user.try(:email), [:admin, review.user]) : Spree.t(:anonymous) %></td>
 					<td><%= link_to_if review.ip_address, review.ip_address, "http://whois.domaintools.com/#{review.ip_address}", target: :blank %></td>
 					<td><%= l review.created_at, format: :short %></td>
