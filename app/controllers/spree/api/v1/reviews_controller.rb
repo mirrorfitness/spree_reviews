@@ -13,7 +13,7 @@ module Spree
         def create
           authorize! :create, Review
 
-          params[:review][:rating].to_s.sub!(/\s*[^0-9]*\z/, '') unless params[:review][:rating].blank?
+          review_params[:rating].to_s.sub!(/\s*[^0-9]*\z/, '') unless review_params[:rating].blank?
 
           @review = Spree::Review.new(review_params)
           @review.product = @product
@@ -35,7 +35,7 @@ module Spree
         end
 
         def permitted_review_attributes
-          [:rating, :title, :review, :name, :show_identifier, :location, :attachment]
+          [:rating, :title, :review, :name, :show_identifier, :location, review_images_attributes: [:attachment]]
         end
 
         def review_params
