@@ -29,11 +29,7 @@ module Spree
           @review.locale = I18n.locale.to_s if Spree::Reviews::Config[:track_locale]
 
           if @review.save
-            if Spree::Reviews::Config[:include_unapproved_reviews]
-              respond_with(@review, status: 201, default_template: :show)
-            else
-              head :no_content
-            end
+            respond_with(@review, status: 201, default_template: :show)
           else
             invalid_resource!(@review)
           end
