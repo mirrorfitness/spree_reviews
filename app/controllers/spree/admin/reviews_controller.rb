@@ -17,8 +17,8 @@ class Spree::Admin::ReviewsController < Spree::Admin::ResourceController
 
   def feature
     review = Spree::Review.find(params[:id])
-    if review.update_attribute(:featured, true)
-      flash[:notice] = Spree.t(:info_featured_review)
+    if review.update_attribute(:featured, !review.featured)
+      flash[:notice] = Spree.t(review.featured ? :info_featured_review : :info_unfeatured_review)
     else
       flash[:error] = Spree.t(:error_featured_review)
     end

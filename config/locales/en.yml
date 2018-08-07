@@ -30,12 +30,14 @@ en:
     error_no_product: The reviewed product doesn't exist anymore
     feature: Feature
     featured: Featured
+    not_featured: Not Featured
     feedback: Feedback
     feedback_review_for: "Review: '%{review}'"
     for: for
     from: from
     info_approve_review: Review approved
     info_featured_review: Review featured
+    info_unfeatured_review: Review unfeatured
     leave_us_a_review_for: "Please leave us a review and a rating for our '%{name}'"
     no_reviews_available: "No reviews have been written for this product."
     out_of_5: "out of 5"
