@@ -9,9 +9,16 @@ module Spree
           authorize! :create, FeedbackReview
 
           if @review.present?
-            @feedback_review = @review.feedback_reviews.new(feedback_review_params)
+            @feedback_review = FeedbackReview.find_by ip_address: request.remote_ip, review_id: @review.id
+
+            # Dissalow multiple reviews with the same ip address
+            @feedback_review = @review.feedback_reviews.new(feedback_review_params) if @feedback_review.nil?
+
             @review.user = current_api_user
+
+            @feedback_review.rating = feedback_review_params[:rating]
             @feedback_review.locale = I18n.locale.to_s if Spree::Reviews::Config[:track_locale]
+            @feedback_review.ip_address = request.remote_ip
           end
 
           if @feedback_review.save
