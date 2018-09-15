@@ -68,7 +68,8 @@
 						<%= link_to_with_icon review.featured ? 'save' : 'cancel', Spree.t(review.featured ? :featured : :not_featured), feature_admin_review_url(review), no_text: true, class: 'featured btn btn-default' %>
           </td>
 					<td><%= txt_stars(review.rating) %></td>
-					<td><%= link_to "(#{review.feedback_stars}/#{review.feedback_reviews.size})", admin_review_feedback_reviews_path(review) %></td>
+					<td><%= link_to "#{review.feedback_stars} out of #{review.feedback_reviews.size}", admin_review_feedback_reviews_path(review),
+						{title: "#{review.feedback_stars} of #{review.feedback_reviews.size} people found this review helpful"} %></td>
           <td><%= tag.img(src: review.review_images.first.attachment.url(:thumb)) if review.review_images.any? %></td>
 					<td><%= review.user_id ? link_to(review.user.try(:email), [:admin, review.user]) : Spree.t(:anonymous) %></td>
 					<td><%= link_to_if review.ip_address, review.ip_address, "http://whois.domaintools.com/#{review.ip_address}", target: :blank %></td>
