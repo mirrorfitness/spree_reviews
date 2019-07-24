@@ -1,5 +1,5 @@
 class Spree::FeedbackReview < ActiveRecord::Base
-  belongs_to :user, class_name: Spree.user_class.to_s
+  belongs_to :user, class_name: Spree.user_class.to_s, optional: true
   belongs_to :review, dependent: :destroy, counter_cache: true
 
   validates :review, presence: true

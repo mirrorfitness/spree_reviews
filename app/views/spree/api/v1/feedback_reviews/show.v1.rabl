@@ -1,2 +1,2 @@
 object @review
-extends "spree/api/v1/reviews/show"
+extends 'spree/api/v1/reviews/show'

@@ -6,12 +6,10 @@ module Spree
         before_action :load_review, only: :create
 
         def create
-          authorize! :create, FeedbackReview
-
           if @review.present?
             @feedback_review = FeedbackReview.find_by ip_address: request.remote_ip, review_id: @review.id
 
-            # Dissalow multiple reviews with the same ip address
+            # Dissallow multiple reviews with the same ip address
             @feedback_review = @review.feedback_reviews.new(feedback_review_params) if @feedback_review.nil?
 
             @review.user = current_api_user
@@ -32,7 +30,7 @@ module Spree
         protected
 
         def load_review
-          @review ||= Spree::Review.find_by_id!(params[:review_id])
+          @review = Spree::Review.find_by_id!(params[:review_id])
         end
 
         def permitted_feedback_review_attributes
