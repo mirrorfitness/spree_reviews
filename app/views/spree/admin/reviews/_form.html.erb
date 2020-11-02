@@ -56,7 +56,7 @@
       <% (@review.review_images).each do |image| %>
         <tr id="<%= spree_dom_id image %>" data-hook="images_row">
           <td class="image">
-            <%= link_to image_tag(main_app.url_for(image.attachment.url(:thumb))), main_app.url_for(image.attachment.url) %>
+            <%= link_to image_tag(main_app.url_for(image.attachment.variant(resize_to_fit: [100, 100]))), main_app.url_for(image.attachment) %>
           </td>
           <td class="actions actions-2 text-right">
             <%= link_to_delete(image, { url: spree.admin_review_review_image_url(@review, image), no_text: true }) if can? :destroy, image %>
